@@ -70,23 +70,23 @@ try {
 
   const zoom = () => page.evaluate(() => window.__town.game.scene.getScene('town').cameras.main.zoom);
   // The director owns the camera by default; the camera checks below are about manual control.
-  await page.getByRole('button', { name: 'Director: on', exact: true }).click();
+  await page.getByRole('button', { name: 'Diretor: ligado', exact: true }).click();
   await page.waitForFunction(() => !window.__town.game.scene.getScene('town').isDirector());
-  await page.getByRole('button', { name: 'Town view', exact: true }).click();
+  await page.getByRole('button', { name: 'Vista da cidade', exact: true }).click();
   await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
   const initialZoom = await zoom();
-  await page.getByRole('button', { name: 'Library', exact: true }).click();
+  await page.getByRole('button', { name: 'Biblioteca', exact: true }).click();
   await page.waitForFunction(() => Math.abs(window.__town.game.scene.getScene('town').cameras.main.zoom - 2.5) < 0.01);
-  await page.getByRole('button', { name: 'Town view', exact: true }).click();
+  await page.getByRole('button', { name: 'Vista da cidade', exact: true }).click();
   assert.ok(Math.abs(await zoom() - initialZoom) < 0.01);
-  await page.getByRole('button', { name: 'Follow: off', exact: true }).click();
+  await page.getByRole('button', { name: 'Seguir: desligado', exact: true }).click();
   await page.waitForFunction(() => window.__town.game.scene.getScene('town').isFollowing());
-  await page.getByRole('button', { name: 'Town view', exact: true }).click();
+  await page.getByRole('button', { name: 'Vista da cidade', exact: true }).click();
   assert.equal(await page.evaluate(() => window.__town.game.scene.getScene('town').isFollowing()), false);
-  assert.equal(await page.locator('#follow').textContent(), 'Follow: off');
+  assert.equal(await page.locator('#follow').textContent(), 'Seguir: desligado');
   await page.mouse.move(800, 450); await page.mouse.wheel(0, -300);
   await page.waitForFunction(z => window.__town.game.scene.getScene('town').cameras.main.zoom > z + 0.1, initialZoom);
-  await page.getByRole('button', { name: 'Town view', exact: true }).click();
+  await page.getByRole('button', { name: 'Vista da cidade', exact: true }).click();
 
   await mkdir('output/playwright', { recursive: true });
   await page.screenshot({ path: 'output/playwright/world-overview.png' });
@@ -95,7 +95,7 @@ try {
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     await page.screenshot({ path: `output/playwright/world-${name}.png` });
   }
-  await page.getByRole('button', { name: 'Town view', exact: true }).click();
+  await page.getByRole('button', { name: 'Vista da cidade', exact: true }).click();
   await page.setViewportSize({ width: 1366, height: 768 });
   await page.waitForFunction(() => Math.abs(window.__town.game.scene.getScene('town').cameras.main.zoom - Math.min(1366 / (90 * 16), 768 / (50 * 16))) < 0.01);
   await page.screenshot({ path: 'output/playwright/world-1366.png' });
@@ -124,14 +124,15 @@ try {
   await page.goto('http://127.0.0.1:5191/?agents=demo&hour=22');
   await page.waitForFunction(() => window.__town?.game.scene.getScene('town')?.textures.exists('art-tree0'));
   await page.screenshot({ path: 'output/playwright/world-night.png' });
-  // Offline live mode must stay empty rather than substitute demo residents.
+  // Offline live mode never substitutes demo residents, but the 117 fixed
+  // townsfolk remain: they are permanent and do not depend on live events.
   await page.route('**/api/town/**', route => route.abort());
   await page.goto('http://127.0.0.1:5191/');
   await page.waitForFunction(() => window.__town?.game.scene.getScene('town')?.textures.exists('art-tree0'));
-  assert.equal(await page.evaluate(() => window.__town.sim.residents.size), 0);
-  await page.waitForFunction(() => document.querySelector('#status').textContent.includes('disconnected'));
+  assert.equal(await page.evaluate(() => window.__town.sim.residents.size), 117);
+  await page.waitForFunction(() => document.querySelector('#status').textContent.includes('desconectado'));
   assert.deepEqual(errors, []);
-  console.log(JSON.stringify({ ...audit, camera: 'focus, follow, wheel, overview and resize passed', offlineLive: 'empty and disconnected', pageErrors: errors }, null, 2));
+  console.log(JSON.stringify({ ...audit, camera: 'focus, follow, wheel, overview and resize passed', offlineLive: 'apenas os 117 moradores fixos e desconectado', pageErrors: errors }, null, 2));
 } finally {
   await browser?.close();
   await server.close();

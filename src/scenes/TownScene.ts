@@ -144,7 +144,7 @@ export class TownScene extends Phaser.Scene {
         }).setDepth(baseY - 3);
       }
       this.buildingViews.push({ building: b, image, litKey, darkKey, lit: false, smoke, glowX: (b.x + b.w / 2) * TILE, glowY: baseY - 10 });
-      if (b.kind !== 'house') {
+      {
         this.add.text((b.x + b.w / 2) * TILE, baseY + 3, b.label, { fontFamily: 'monospace', fontSize: '6px', color: '#e9dfc8', backgroundColor: 'rgba(20,17,26,0.7)', padding: { x: 2, y: 1 } })
           .setOrigin(0.5, 0).setResolution(6).setDepth(100000).setAlpha(0.9);
       }
@@ -412,7 +412,7 @@ export class TownScene extends Phaser.Scene {
       if (!v.sprite.visible) { v.sprite.setVisible(true); v.shadow.setVisible(true); }
       this.syncView(v, r);
       // name tags are a budget: past a crowd, or zoomed out, only the selected one keeps its tag
-      v.name.setVisible(this.selected === r.id || (zoom >= 2 && crowd <= 80 && !(r.kind === 'runner' && zoom < 3)));
+      v.name.setVisible(this.selected === r.id || (zoom >= 2 && crowd <= 250 && !(r.kind === 'runner' && zoom < 3)));
     }
     for (const [id, v] of this.views) {
       if (seen.has(id)) continue;

@@ -221,16 +221,60 @@ export class TownSim {
       r.porch = spot;
       const c = tileCenter(spot);
       r.x = c.x; r.y = c.y;
-      r.state = 'resting';
-      r.anim = 'sit';
+      // fixed townsfolk live on the street: they stand, stroll short paths and
+      // chat with their neighbours — nobody sits frozen on a porch all day
+      r.state = 'waiting';
+      r.anim = 'stand';
       r.facing = 'down';
-      r.hold = Infinity; // a fixed resident never leaves on its own
+      r.hold = this.wanderDelay(m.id); // seconds until the first stroll
+      r.quiet = 0;
+      r.bubble = null;
       r.history = [{ at: this.time, text: 'morador fixo da casa' }];
       this.residents.set(r.id, r);
     }
   }
 
-  /** A porch seat if one is free, otherwise a walkable tile beside the house. */
+  /**
+   * A short stroll for a fixed resident: a walkable tile a few steps from
+   * home, out on the street or the little square in front of the house.
+   */
+  private wander(r: Resident): void {
+    const around = r.porch ?? r.home.door;
+    const options: Point[] = [];
+    for (let dy = -3; dy <= 3; dy++) for (let dx = -4; dx <= 4; dx++) {
+      const p = { x: around.x + dx, y: around.y + dy };
+      if (p.x < 1 || p.y < 1 || p.x >= this.map.grid.w - 1 || p.y >= this.map.grid.h - 1) continue;
+      const cost = this.map.grid.cost[p.y * this.map.grid.w + p.x] ?? 0;
+      if (cost === 0) continue;
+      if (this.staticSpots.has(`${p.x},${p.y}`) && !(r.porch && r.porch.x === p.x && r.porch.y === p.y)) continue;
+      options.push(p);
+    }
+    if (options.length === 0) { r.hold = 10; return; }
+    const target = options[Math.floor(Math.random() * options.length)]!;
+    r.intent = { target: IDLE_TARGET, tool: null, tile: target };
+    this.walkTo(r, target);
+    r.state = 'moving';
+    r.bubble = null;
+  }
+
+  /** Seconds a fixed resident stays put before the next stroll. */
+  private wanderDelay(id: string): number {
+    return 6 + (hashString(id) % 25);
+  }
+
+  /** A neighbouring fixed resident to chat with, when one stands close by. */
+  private chatBuddy(r: Resident): Resident | null {
+    for (const other of this.residents.values()) {
+      if (other.id === r.id || !other.memory || other.kind !== 'session') continue;
+      if (other.state !== 'waiting' && other.state !== 'resting') continue;
+      if (Math.hypot(other.x - r.x, other.y - r.y) > 1.6 * TILE) continue;
+      if (other.bubble) continue;
+      return other;
+    }
+    return null;
+  }
+
+  /** A porch seat if one is free, otherwise any walkable tile near the house. */
   private staticSpotFor(home: Building): Point | null {
     for (const p of home.porch) {
       const key = `${p.x},${p.y}`;
@@ -238,9 +282,11 @@ export class TownSim {
     }
     const door = home.door;
     const candidates: { t: Point; d: number }[] = [];
-    for (let y = door.y + 1; y <= door.y + 4; y++) {
-      for (let x = home.x - 2; x <= home.x + home.w + 2; x++) {
-        if (x < 0 || y < 0 || x >= this.map.grid.w || y >= this.map.grid.h) continue;
+    // generous: the yard, the street in front, and both sidewalks — a full
+    // house theme (50+ residents) still fits in front of its own door
+    for (let y = door.y + 1; y <= door.y + 8; y++) {
+      for (let x = home.x - 5; x <= home.x + home.w + 5; x++) {
+        if (x < 1 || y < 1 || x >= this.map.grid.w - 1 || y >= this.map.grid.h - 1) continue;
         if (this.map.grid.cost[y * this.map.grid.w + x] === 0) continue;
         if (this.map.stations.some((s) => s.tile.x === x && s.tile.y === y)) continue;
         candidates.push({ t: { x, y }, d: Math.abs(x - door.x) + Math.abs(y - door.y) });
@@ -251,7 +297,8 @@ export class TownSim {
       const key = `${c.t.x},${c.t.y}`;
       if (!this.staticSpots.has(key) && !this.porches.has(key)) return c.t;
     }
-    return null;
+    // last resort: the nearest walkable tile anywhere around the house
+    return nearestWalkable(this.map.grid, door, 12);
   }
 
   /** Sessions and subagents that still represent a live execution context. */
@@ -292,7 +339,7 @@ export class TownSim {
         r.x = end.x; r.y = end.y; r.pathIndex = r.path.length - 1;
         this.arrive(r);
       }
-      r.history = r.history.filter((h) => h.text !== 'arrived in town' && h.text !== 'arrived to help');
+      r.history = r.history.filter((h) => h.text !== 'chegou à cidade' && h.text !== 'chegou para ajudar');
     }
     this.log.length = 0;
   }
@@ -313,7 +360,7 @@ export class TownSim {
       r.anim = 'sit';
       r.facing = 'down';
       r.hold = MEMORY_SECONDS;
-      r.history = [{ at: this.time, text: 'earlier today' }];
+      r.history = [{ at: this.time, text: 'mais cedo hoje' }];
       this.residents.set(r.id, r);
     }
   }
@@ -345,11 +392,11 @@ export class TownSim {
         } else {
           this.setEmote(r, 'think', 2.5);
         }
-        this.note(r, e.action ?? 'turn started');
+        this.note(r, e.action ?? 'turno iniciado');
         break;
       case 'agent.tool_started': {
         r.reaction = null;
-        const tool = e.tool ?? 'tool';
+        const tool = e.tool ?? 'ferramenta';
         this.dispatch(r, tool, e.detail ?? null);
         this.note(r, e.detail ? `${tool} · ${e.detail}` : tool);
         break;
@@ -366,10 +413,10 @@ export class TownSim {
         r.queue.length = 0;
         this.setEmote(r, 'ok', CELEBRATE_SECONDS);
         this.react(r, 'complete');
-        this.board.unshift({ at: this.time, name: r.name, text: e.action ?? 'turn completed' });
+        this.board.unshift({ at: this.time, name: r.name, text: e.action ?? 'turno concluído' });
         if (this.board.length > 12) this.board.length = 12;
         this.enqueue(r, { target: { place: 'hall', style: 'desk', verb: 'pinning' }, tool: null, tile: this.boardTile });
-        this.note(r, e.action ?? 'completed');
+        this.note(r, e.action ?? 'concluído');
         break;
       }
       case 'agent.failed': {
@@ -388,7 +435,7 @@ export class TownSim {
           r.bubble = null;
           this.setEmote(r, 'fail', FAIL_SECONDS);
           this.react(r, 'fail');
-          this.note(r, e.reason ?? 'failed');
+          this.note(r, e.reason ?? 'falhou');
         }
         break;
       }
@@ -398,9 +445,9 @@ export class TownSim {
         r.queue.length = 0;
         r.intent = null;
         this.leaveStation(r);
-        if (r.post) { this.goPost(r); this.note(r, 'run over, back on watch'); break; }
+        if (r.post) { this.goPost(r); this.note(r, 'execução encerrada, de volta ao posto'); break; }
         this.goHome(r);
-        this.note(r, 'went home');
+        this.note(r, 'foi para casa');
         break;
     }
   }
@@ -438,12 +485,12 @@ export class TownSim {
       post = post ?? this.posts[0] ?? r.home.door;
       this.postsTaken.set(`${post.x},${post.y}`, crowd + 1);
       r.post = post;
-      this.note(r, 'took up a post');
+      this.note(r, 'assumiu o posto');
       this.enqueue(r, { target: THINK_TARGET, tool: null, tile: post });
       return r;
     }
-    this.note(r, r.isChild ? 'arrived to help' : 'arrived in town');
-    this.enqueue(r, { target: { place: 'hall', style: 'desk', verb: 'checking in' }, tool: null });
+    this.note(r, r.isChild ? 'chegou para ajudar' : 'chegou à cidade');
+    this.enqueue(r, { target: { place: 'hall', style: 'desk', verb: 'registrando-se' }, tool: null });
     return r;
   }
 
@@ -582,7 +629,7 @@ export class TownSim {
     r.hold = 0;
     r.fade = 1;
     r.bubble = null;
-    this.note(r, 'back to work');
+    this.note(r, 'de volta ao trabalho');
   }
 
   private goHome(r: Resident): void {
@@ -658,7 +705,7 @@ export class TownSim {
         r.facing = 'down';
         r.hold = 0;
         r.quiet = 0;
-        r.bubble = 'on watch';
+        r.bubble = 'de plantão';
         r.place = null;
         return;
       }
@@ -667,16 +714,16 @@ export class TownSim {
         r.style = 'desk';
         this.settleForWork(r, 'work', 'up');
         r.hold = PIN_SECONDS;
-        r.bubble = 'done';
+        r.bubble = 'concluído';
         return;
       }
       // at the front door, facing the street
       r.state = 'waiting';
       r.anim = 'stand';
       r.facing = 'down';
-      r.hold = 0;
+      r.hold = r.memory ? this.wanderDelay(r.id) : 0;
       r.quiet = 0;
-      r.bubble = 'waiting for you';
+      r.bubble = r.memory ? null : 'esperando você';
       r.place = null;
       return;
     }
@@ -725,7 +772,7 @@ export class TownSim {
         r.intent = null;
         this.leaveStation(r);
         this.goHome(r);
-        this.note(r, 'went quiet, sat down');
+        this.note(r, 'ficou quieto, sentou-se');
         continue;
       }
       switch (r.state) {
@@ -746,7 +793,7 @@ export class TownSim {
             // thinking: runners out means a busy desk, none means a pause
             const out = this.runnersOf(r).length;
             r.anim = out > 0 ? 'work' : 'stand';
-            r.bubble = out > 0 ? `${out} out` : r.quiet > 8 ? 'thinking' : null;
+            r.bubble = out > 0 ? `${out} fora` : r.quiet > 8 ? 'pensando' : null;
             if (r.quiet > 45 && out === 0) { this.goWait(r); }
             break;
           }
@@ -760,6 +807,23 @@ export class TownSim {
         }
         case 'waiting': {
           r.quiet += dt;
+          if (r.memory) {
+            // a fixed resident: stands a while, strolls, chats with a neighbour
+            r.hold -= dt;
+            if (r.hold <= 0) {
+              const buddy = this.chatBuddy(r);
+              if (buddy) {
+                r.facing = buddy.x > r.x ? 'right' : buddy.x < r.x ? 'left' : 'down';
+                r.bubble = 'conversando...';
+                buddy.bubble = 'conversando...';
+                r.hold = 8 + Math.random() * 12;
+                buddy.hold = Math.max(buddy.hold, 4);
+              } else {
+                this.wander(r);
+              }
+            }
+            break;
+          }
           if (r.quiet > 120 && Math.random() < dt * 0.04) { this.setEmote(r, 'zzz', 3); }
           break;
         }

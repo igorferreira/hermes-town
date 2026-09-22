@@ -47,7 +47,7 @@ export function createDemoSource(sink: EventSink): Source {
 
   /** One turn: a burst of tools, then done. */
   const turn = (s: Session): void => {
-    emit(s.id, 'agent.assigned', { action: s.child ? 'delegated task' : 'turn started' });
+    emit(s.id, 'agent.assigned', { action: s.child ? 'tarefa delegada' : 'turno iniciado' });
     const calls = Math.floor(rnd(2, 7));
     let t = rnd(0.8, 2);
     for (let i = 0; i < calls; i++) {
@@ -56,13 +56,13 @@ export function createDemoSource(sink: EventSink): Source {
         emit(s.id, 'agent.tool_started', tool === 'skill_view' ? { tool, detail: pick(SKILLS) } : { tool });
         if (tool === 'delegate_task' && s.turnsLeft > 1) spawn(pick(['research', 'fabrication', 'review', 'tooling'] as const), true, s.id.slice(-4));
         const failed = Math.random() < 0.08;
-        later(rnd(0.3, 3), () => emit(s.id, failed ? 'agent.failed' : 'agent.waiting', failed ? { reason: 'tool error' } : { action: 'tool done' }));
+        later(rnd(0.3, 3), () => emit(s.id, failed ? 'agent.failed' : 'agent.waiting', failed ? { reason: 'erro de ferramenta' } : { action: 'ferramenta concluída' }));
       });
       t += rnd(0.6, 2.5);
     }
     later(t + rnd(2, 5), () => {
       s.turnsLeft -= 1;
-      emit(s.id, 'agent.completed', { action: 'turn completed' });
+      emit(s.id, 'agent.completed', { action: 'turno concluído' });
       if (s.turnsLeft <= 0) {
         later(rnd(4, 9), () => { emit(s.id, 'agent.departed'); const i = sessions.indexOf(s); if (i >= 0) sessions.splice(i, 1); });
         return;
@@ -87,10 +87,10 @@ export function createDemoSource(sink: EventSink): Source {
     const id = 'h/cron/0000000000000042';
     if (!seqs.has(id)) emit(id, 'agent.spawned', { role: 'scheduled', displayName: 'Keeper 0042' });
     const run = (): void => {
-      emit(id, 'agent.assigned', { action: 'scheduled run' });
+      emit(id, 'agent.assigned', { action: 'execução agendada' });
       later(2, () => emit(id, 'agent.tool_started', { tool: 'read_file' }));
       later(4, () => emit(id, 'agent.tool_started', { tool: 'discord' }));
-      later(9, () => emit(id, 'agent.completed', { action: 'scheduled run' }));
+      later(9, () => emit(id, 'agent.completed', { action: 'execução agendada' }));
       later(12, () => emit(id, 'agent.departed'));
     };
     later(5, run);
@@ -103,7 +103,7 @@ export function createDemoSource(sink: EventSink): Source {
   };
 
   return {
-    label: 'demo events',
+    label: 'eventos de demonstração',
     start() {
       status = 'connected';
       tick();

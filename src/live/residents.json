@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-09-22T16:38:14.923Z",
+  "generatedAt": "2026-09-22T00:00:00.000Z",
   "source": "/home/igorferreira/.hermes/profiles",
   "residents": [
     {
       "id": ".claude",
       "name": ".claude",
-      "home": "home-5",
-      "homeIndex": 5
+      "home": "home-6",
+      "homeIndex": 6
     },
     {
       "id": ".deleted",
       "name": ".deleted",
-      "home": "home-2",
-      "homeIndex": 2
+      "home": "home-6",
+      "homeIndex": 6
     },
     {
       "id": "ai-solution-architect",
@@ -23,98 +23,98 @@
     {
       "id": "aws-tutor",
       "name": "Aws Tutor",
-      "home": "home-1",
-      "homeIndex": 1
-    },
-    {
-      "id": "casa-smart",
-      "name": "Casa Smart",
       "home": "home-3",
       "homeIndex": 3
     },
     {
+      "id": "casa-smart",
+      "name": "Casa Smart",
+      "home": "home-5",
+      "homeIndex": 5
+    },
+    {
       "id": "celular-doc",
       "name": "Celular Doc",
-      "home": "home-4",
-      "homeIndex": 4
+      "home": "home-5",
+      "homeIndex": 5
     },
     {
       "id": "devex-platform-senior",
       "name": "Devex Platform Senior",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "devsecops-governance-senior",
       "name": "Devsecops Governance Senior",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "devsquad-architect",
       "name": "Devsquad Architect",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "devsquad-backend",
       "name": "Devsquad Backend",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "devsquad-devsecops",
       "name": "Devsquad Devsecops",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "devsquad-frontend",
       "name": "Devsquad Frontend",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "devsquad-lead",
       "name": "Devsquad Lead",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "devsquad-po",
       "name": "Devsquad Po",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "devsquad-qa",
       "name": "Devsquad Qa",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "devsquad-reviewer",
       "name": "Devsquad Reviewer",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "diario",
       "name": "Diario",
-      "home": "home-0",
-      "homeIndex": 0
+      "home": "home-6",
+      "homeIndex": 6
     },
     {
       "id": "digital-transformation-exec",
       "name": "Digital Transformation Exec",
-      "home": "home-2",
-      "homeIndex": 2
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "dotnet-architect",
       "name": "Dotnet Architect",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "estiloso",
@@ -125,8 +125,8 @@
     {
       "id": "finance-senior",
       "name": "Finance Senior",
-      "home": "home-6",
-      "homeIndex": 6
+      "home": "home-2",
+      "homeIndex": 2
     },
     {
       "id": "health-performance-board",
@@ -137,386 +137,386 @@
     {
       "id": "hermes-town-expert",
       "name": "Hermes Town Expert",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "hr-tech-senior",
       "name": "Hr Tech Senior",
-      "home": "home-2",
-      "homeIndex": 2
+      "home": "home-4",
+      "homeIndex": 4
     },
     {
       "id": "iam-auth-architect",
       "name": "Iam Auth Architect",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "insurance-domain-senior",
       "name": "Insurance Domain Senior",
-      "home": "home-0",
-      "homeIndex": 0
+      "home": "home-2",
+      "homeIndex": 2
     },
     {
       "id": "java-architect",
       "name": "Java Architect",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "java-senior",
       "name": "Java Senior",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "juris-administrativo",
       "name": "Juris Administrativo",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-aduaneiro",
-      "name": "Juris Aduaneiro",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-agrario",
-      "name": "Juris Agrario",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-ambiental",
-      "name": "Juris Ambiental",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-arbitragem",
-      "name": "Juris Arbitragem",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-bancario",
-      "name": "Juris Bancario",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-ciberseguranca",
-      "name": "Juris Ciberseguranca",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-civil",
-      "name": "Juris Civil",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-compliance",
-      "name": "Juris Compliance",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-concorrencial",
-      "name": "Juris Concorrencial",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-constitucional",
-      "name": "Juris Constitucional",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-consumidor",
-      "name": "Juris Consumidor",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-contratos",
-      "name": "Juris Contratos",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-desportivo",
-      "name": "Juris Desportivo",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-digital",
-      "name": "Juris Digital",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-direitos-humanos",
-      "name": "Juris Direitos Humanos",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-educacional",
-      "name": "Juris Educacional",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-eleitoral",
-      "name": "Juris Eleitoral",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-empresarial",
-      "name": "Juris Empresarial",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-energia",
-      "name": "Juris Energia",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-execucao-penal",
-      "name": "Juris Execucao Penal",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-familia",
-      "name": "Juris Familia",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-financas-publicas",
-      "name": "Juris Financas Publicas",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-ia",
-      "name": "Juris Ia",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-imobiliario",
-      "name": "Juris Imobiliario",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-internacional-privado",
-      "name": "Juris Internacional Privado",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-internacional-publico",
-      "name": "Juris Internacional Publico",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-juri",
-      "name": "Juris Juri",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-lgpd",
-      "name": "Juris Lgpd",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-licitacoes",
-      "name": "Juris Licitacoes",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-master",
-      "name": "Juris Master",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-mercado-capitais",
-      "name": "Juris Mercado Capitais",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-militar",
-      "name": "Juris Militar",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-minerario",
-      "name": "Juris Minerario",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-penal",
-      "name": "Juris Penal",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-penal-economico",
-      "name": "Juris Penal Economico",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-petroleo-gas",
-      "name": "Juris Petroleo Gas",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-previdenciario",
-      "name": "Juris Previdenciario",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-processo-civil",
-      "name": "Juris Processo Civil",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-processo-penal",
-      "name": "Juris Processo Penal",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-processo-trabalho",
-      "name": "Juris Processo Trabalho",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-processo-tributario",
-      "name": "Juris Processo Tributario",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-propriedade-intelectual",
-      "name": "Juris Propriedade Intelectual",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-recuperacao-judicial",
-      "name": "Juris Recuperacao Judicial",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-regulatorio",
-      "name": "Juris Regulatorio",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-responsabilidade-civil",
-      "name": "Juris Responsabilidade Civil",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-saude",
-      "name": "Juris Saude",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-securitario",
-      "name": "Juris Securitario",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-servidor-publico",
-      "name": "Juris Servidor Publico",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-societario",
-      "name": "Juris Societario",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-sucessoes",
-      "name": "Juris Sucessoes",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-telecom",
-      "name": "Juris Telecom",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-trabalho",
-      "name": "Juris Trabalho",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-transportes",
-      "name": "Juris Transportes",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "juris-tributario",
-      "name": "Juris Tributario",
-      "home": "home-2",
-      "homeIndex": 2
-    },
-    {
-      "id": "linkedin-post-specialist",
-      "name": "Linkedin Post Specialist",
-      "home": "home-6",
-      "homeIndex": 6
-    },
-    {
-      "id": "linux-sys",
-      "name": "Linux Sys",
       "home": "home-1",
       "homeIndex": 1
     },
     {
-      "id": "locaweb",
-      "name": "Locaweb",
+      "id": "juris-aduaneiro",
+      "name": "Juris Aduaneiro",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-agrario",
+      "name": "Juris Agrario",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-ambiental",
+      "name": "Juris Ambiental",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-arbitragem",
+      "name": "Juris Arbitragem",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-bancario",
+      "name": "Juris Bancario",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-ciberseguranca",
+      "name": "Juris Ciberseguranca",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-civil",
+      "name": "Juris Civil",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-compliance",
+      "name": "Juris Compliance",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-concorrencial",
+      "name": "Juris Concorrencial",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-constitucional",
+      "name": "Juris Constitucional",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-consumidor",
+      "name": "Juris Consumidor",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-contratos",
+      "name": "Juris Contratos",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-desportivo",
+      "name": "Juris Desportivo",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-digital",
+      "name": "Juris Digital",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-direitos-humanos",
+      "name": "Juris Direitos Humanos",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-educacional",
+      "name": "Juris Educacional",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-eleitoral",
+      "name": "Juris Eleitoral",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-empresarial",
+      "name": "Juris Empresarial",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-energia",
+      "name": "Juris Energia",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-execucao-penal",
+      "name": "Juris Execucao Penal",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-familia",
+      "name": "Juris Familia",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-financas-publicas",
+      "name": "Juris Financas Publicas",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-ia",
+      "name": "Juris Ia",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-imobiliario",
+      "name": "Juris Imobiliario",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-internacional-privado",
+      "name": "Juris Internacional Privado",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-internacional-publico",
+      "name": "Juris Internacional Publico",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-juri",
+      "name": "Juris Juri",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-lgpd",
+      "name": "Juris Lgpd",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-licitacoes",
+      "name": "Juris Licitacoes",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-master",
+      "name": "Juris Master",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-mercado-capitais",
+      "name": "Juris Mercado Capitais",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-militar",
+      "name": "Juris Militar",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-minerario",
+      "name": "Juris Minerario",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-penal",
+      "name": "Juris Penal",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-penal-economico",
+      "name": "Juris Penal Economico",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-petroleo-gas",
+      "name": "Juris Petroleo Gas",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-previdenciario",
+      "name": "Juris Previdenciario",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-processo-civil",
+      "name": "Juris Processo Civil",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-processo-penal",
+      "name": "Juris Processo Penal",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-processo-trabalho",
+      "name": "Juris Processo Trabalho",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-processo-tributario",
+      "name": "Juris Processo Tributario",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-propriedade-intelectual",
+      "name": "Juris Propriedade Intelectual",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-recuperacao-judicial",
+      "name": "Juris Recuperacao Judicial",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-regulatorio",
+      "name": "Juris Regulatorio",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-responsabilidade-civil",
+      "name": "Juris Responsabilidade Civil",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-saude",
+      "name": "Juris Saude",
+      "home": "home-0",
+      "homeIndex": 0
+    },
+    {
+      "id": "juris-securitario",
+      "name": "Juris Securitario",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-servidor-publico",
+      "name": "Juris Servidor Publico",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-societario",
+      "name": "Juris Societario",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-sucessoes",
+      "name": "Juris Sucessoes",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-telecom",
+      "name": "Juris Telecom",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-trabalho",
+      "name": "Juris Trabalho",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-transportes",
+      "name": "Juris Transportes",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "juris-tributario",
+      "name": "Juris Tributario",
+      "home": "home-1",
+      "homeIndex": 1
+    },
+    {
+      "id": "linkedin-post-specialist",
+      "name": "Linkedin Post Specialist",
       "home": "home-4",
       "homeIndex": 4
+    },
+    {
+      "id": "linux-sys",
+      "name": "Linux Sys",
+      "home": "home-3",
+      "homeIndex": 3
+    },
+    {
+      "id": "locaweb",
+      "name": "Locaweb",
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "main",
@@ -527,50 +527,50 @@
     {
       "id": "mecanico",
       "name": "Mecanico",
-      "home": "home-3",
-      "homeIndex": 3
+      "home": "home-5",
+      "homeIndex": 5
     },
     {
       "id": "perfumaria",
       "name": "Perfumaria",
-      "home": "home-6",
-      "homeIndex": 6
+      "home": "home-5",
+      "homeIndex": 5
     },
     {
       "id": "pickup-senior",
       "name": "Pickup Senior",
-      "home": "home-3",
-      "homeIndex": 3
+      "home": "home-6",
+      "homeIndex": 6
     },
     {
       "id": "product-senior",
       "name": "Product Senior",
-      "home": "home-0",
-      "homeIndex": 0
+      "home": "home-4",
+      "homeIndex": 4
     },
     {
       "id": "promo",
       "name": "Promo",
-      "home": "home-0",
-      "homeIndex": 0
+      "home": "home-5",
+      "homeIndex": 5
     },
     {
       "id": "python-senior",
       "name": "Python Senior",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "relacionamento-terapeuta",
       "name": "Relacionamento Terapeuta",
-      "home": "home-2",
-      "homeIndex": 2
+      "home": "home-6",
+      "homeIndex": 6
     },
     {
       "id": "relationship-senior",
       "name": "Relationship Senior",
-      "home": "home-2",
-      "homeIndex": 2
+      "home": "home-6",
+      "homeIndex": 6
     },
     {
       "id": "saude",
@@ -665,44 +665,44 @@
     {
       "id": "sec-systems-architect",
       "name": "Sec Systems Architect",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "sindico-virtual-mansoes-eldorado",
       "name": "Sindico Virtual Mansoes Eldorado",
-      "home": "home-4",
-      "homeIndex": 4
+      "home": "home-5",
+      "homeIndex": 5
     },
     {
       "id": "solution-architect",
       "name": "Solution Architect",
-      "home": "home-2",
-      "homeIndex": 2
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "tech-pc",
       "name": "Tech Pc",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-5",
+      "homeIndex": 5
     },
     {
       "id": "ubuntu-doc",
       "name": "Ubuntu Doc",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "ubuntu-mate-doc",
       "name": "Ubuntu Mate Doc",
-      "home": "home-1",
-      "homeIndex": 1
+      "home": "home-3",
+      "homeIndex": 3
     },
     {
       "id": "video-studio",
       "name": "Video Studio",
-      "home": "home-4",
-      "homeIndex": 4
+      "home": "home-6",
+      "homeIndex": 6
     }
   ]
 }

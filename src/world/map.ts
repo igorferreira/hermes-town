@@ -214,19 +214,22 @@ export function buildTownLocal(): TownMap {
     id, kind, x, y, w, h, door: { x: x + Math.floor(w / 2), y: y + h }, porch: [], label,
   });
   const buildings: Building[] = [
-    mk('hall', 'hall', 26, 6, 11, 5, 'Town hall'),
-    mk('library', 'library', 4, 6, 11, 5, 'Library'),
-    mk('workshop', 'workshop', 46, 6, 10, 5, 'Workshop'),
-    mk('forge', 'forge', 47, 25, 9, 5, 'Forge'),
-    mk('post', 'post', 3, 25, 10, 5, 'Post office'),
-    mk('observatory', 'observatory', 16, 25, 7, 5, 'Observatory'),
-    mk('tavern', 'tavern', 38, 25, 8, 5, 'Tavern'),
+    mk('hall', 'hall', 26, 6, 11, 5, 'Prefeitura'),
+    mk('library', 'library', 4, 6, 11, 5, 'Biblioteca'),
+    mk('workshop', 'workshop', 46, 6, 10, 5, 'Oficina'),
+    mk('forge', 'forge', 47, 25, 9, 5, 'Forja'),
+    mk('post', 'post', 3, 25, 10, 5, 'Correio'),
+    mk('observatory', 'observatory', 16, 25, 7, 5, 'Observatório'),
+    mk('tavern', 'tavern', 38, 25, 8, 5, 'Taverna'),
   ];
   buildings[0]!.door = { x: 31, y: 11 };
   buildings[1]!.door = { x: 10, y: 11 };
   buildings[2]!.door = { x: 51, y: 11 };
   const homes: Building[] = [];
-  const homeNames = ['Casa Banca de Saúde', 'Casa DevSquad', 'Casa Relacionamento', 'Casa Carro', 'Casa Celular', 'Casa Moda', 'Casa Perfumaria'];
+  // os sete temas das casas (home-0..home-6), na ordem da rua
+  const homeNames = ['Casa da Saúde', 'Casa da Justiça', 'Casa das Finanças', 'Casa da Tecnologia', 'Casa da Carreira', 'Casa do Lar & Carro', 'Casa da Comunicação'];
+  // decoração externa de cada tema: algo que a profissão deixou pela porta
+  const homeDecor: PropKind[] = ['flowerBox', 'noticeBoard', 'crate', 'workbench', 'bookCrates', 'firewood', 'mailSacks'];
   [3, 10, 17, 24, 36, 43, 50].forEach((hx, i) => {
     const h = mk(`home-${i}`, 'house', hx, 35, 5, 4, homeNames[i] ?? `Casa ${i + 1}`);
     h.porch = [{ x: hx, y: 39 }, { x: hx + 4, y: 39 }];
@@ -352,7 +355,7 @@ export function buildTownLocal(): TownMap {
     // every house is somebody's: sunflowers, a flower box, something left by the wall
     props.push({ kind: 'sunflowers', x: (h.x + (i % 2 ? 3 : 1)) * TILE + 2, y: 38 * TILE - 6, blocks: [] });
     if (i % 3 !== 1) props.push({ kind: 'flowerBox', x: (h.x + (i % 2 ? 0 : 3)) * TILE + 1, y: 38 * TILE + 8, blocks: [] });
-    const side: PropKind = (['barrel', 'log', 'crate', 'firewood', 'wheelbarrow', 'barrel', 'hay', 'crate'] as PropKind[])[i]!;
+    const side: PropKind = homeDecor[i] ?? 'crate';
     props.push({ kind: side, x: (h.x + 5) * TILE + 2, y: 37 * TILE + 4, blocks: [{ x: h.x + 5, y: 37 }] });
     // low fences separate the back gardens
     if (i !== 3 && i !== 7) for (let y = 33; y <= 34; y++) ground[y]![h.x + 5] = T.fenceV;

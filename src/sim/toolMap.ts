@@ -19,15 +19,15 @@ export interface ToolTarget {
   verb: string;
 }
 
-const LIBRARY: ToolTarget = { place: 'library', style: 'read', verb: 'reading' };
-const WORKSHOP: ToolTarget = { place: 'workshop', style: 'hammer', verb: 'making' };
-const FORGE: ToolTarget = { place: 'forge', style: 'bellows', verb: 'running' };
-const POST: ToolTarget = { place: 'post', style: 'parcel', verb: 'sending' };
-const OBSERVATORY: ToolTarget = { place: 'observatory', style: 'gaze', verb: 'looking' };
-const HALL: ToolTarget = { place: 'hall', style: 'desk', verb: 'planning' };
-const MARKET: ToolTarget = { place: 'market', style: 'haggle', verb: 'using' };
+const LIBRARY: ToolTarget = { place: 'library', style: 'read', verb: 'lendo' };
+const WORKSHOP: ToolTarget = { place: 'workshop', style: 'hammer', verb: 'fabricando' };
+const FORGE: ToolTarget = { place: 'forge', style: 'bellows', verb: 'operando' };
+const POST: ToolTarget = { place: 'post', style: 'parcel', verb: 'enviando' };
+const OBSERVATORY: ToolTarget = { place: 'observatory', style: 'gaze', verb: 'observando' };
+const HALL: ToolTarget = { place: 'hall', style: 'desk', verb: 'planejando' };
+const MARKET: ToolTarget = { place: 'market', style: 'haggle', verb: 'usando' };
 /** Skills are the market: every skill is a stall, a skill call is a visit to it. */
-const SKILLS: ToolTarget = { place: 'market', style: 'haggle', verb: 'consulting' };
+const SKILLS: ToolTarget = { place: 'market', style: 'haggle', verb: 'consultando' };
 
 /** Exact Hermes tool names, grouped by where the work happens. */
 const EXACT: Record<string, ToolTarget> = Object.fromEntries<ToolTarget>([
@@ -81,7 +81,7 @@ export function targetForTool(tool: string): ToolTarget {
 }
 
 /** Where a resident goes when it has no tool but is thinking (an LLM turn). */
-export const THINK_TARGET: ToolTarget = { place: 'hall', style: 'desk', verb: 'thinking' };
+export const THINK_TARGET: ToolTarget = { place: 'hall', style: 'desk', verb: 'pensando' };
 /** Where a resident goes between turns. */
 export const IDLE_TARGET: ToolTarget = { place: 'tavern', style: 'sit', verb: 'idle' };
 

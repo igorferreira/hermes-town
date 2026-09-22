@@ -10,6 +10,20 @@ import { PLACE_LABEL, type Place } from './sim/toolMap';
 import { MAP_H, MAP_W, buildTownMap } from './world/map';
 
 
+
+const ESTADO_PT: Record<string, string> = {
+  arriving: 'chegando', moving: 'a caminho', working: 'trabalhando', idle: 'parado',
+  celebrating: 'comemorando', failed: 'com problema', pinning: 'fixando resultado',
+  waiting: 'esperando', returning: 'voltando', handing: 'entregando', leaving: 'saindo',
+  resting: 'descansando', gone: 'partiu', posted: 'de plantão',
+};
+const ANIM_PT: Record<string, string> = { walk: 'caminhando', stand: 'parado', work: 'trabalhando', sit: 'sentado' };
+const PAPEL_PT: Record<string, string> = {
+  coordinator: 'coordenador', research: 'pesquisa', fabrication: 'construção',
+  review: 'revisão', tooling: 'ferramentas', general: 'geral', scheduled: 'agendado',
+};
+const pt = (map: Record<string, string>, v: string): string => map[v] ?? v;
+
 const params = new URLSearchParams(location.search);
 // A build can default to the scripted demo (VITE_DEFAULT_AGENTS=demo) for a
 // public showcase; ?agents=demo / ?agents=live always win over the build default.
@@ -100,20 +114,20 @@ function renderPanel(): void {
   const parent = r.parentId ? sim.residents.get(r.parentId) : null;
   const runnersOut = r.kind === 'session' ? sim.runners().filter((x) => x.parentId === r.id).length : 0;
   const rows: [string, string][] = [
-    ['estado', r.state === 'waiting' ? 'esperando você' : r.state === 'posted' ? 'de guarda até a próxima execução' : r.state],
+    ['estado', r.state === 'waiting' ? 'esperando você' : r.state === 'posted' ? 'de guarda até a próxima execução' : pt(ESTADO_PT, r.state)],
     ['onde', place],
-    ['fazendo', r.bubble ?? (r.anim === 'sit' ? 'descansando' : r.anim)],
+    ['fazendo', r.bubble ?? pt(ANIM_PT, r.anim)],
     ...(r.kind === 'runner' ? [['enviado por', parent?.name ?? 'uma sessão'] as [string, string]] : [['chamadas fora', String(runnersOut)] as [string, string]]),
     ['casa', r.home.label],
     ['na cidade', ago(sim.now() - r.spawnedAt)],
     ['último evento', `${ago(sim.now() - r.lastEventAt)} atrás`],
   ];
-  const sub = r.kind === 'runner' ? `chamada de ferramenta · ${r.role}` : r.role === 'scheduled' ? `tarefa agendada · guardião` : `${r.title ?? (r.memory ? 'mais cedo hoje' : r.isChild ? 'subagente' : 'sessão')} · ${r.role}`;
+  const sub = r.kind === 'runner' ? `chamada de ferramenta · ${pt(PAPEL_PT, r.role)}` : r.role === 'scheduled' ? `tarefa agendada · guardião` : `${r.title ?? (r.memory ? 'mais cedo hoje' : r.isChild ? 'subagente' : 'sessão')} · ${pt(PAPEL_PT, r.role)}`;
   panel.innerHTML = `
     <h3>${escapeHtml(r.name)}</h3>
     <div class="sub">${escapeHtml(sub)}</div>
     ${rows.map(([k, v]) => `<div class="row"><span>${k}</span><span>${escapeHtml(v)}</span></div>`).join('')}
-    <ul>${r.history.map((h) => `<li><b>${escapeHtml(h.text)}</b> <span>${ago(sim.now() - h.at)} ago</span></li>`).join('')}</ul>`;
+    <ul>${r.history.map((h) => `<li><b>${escapeHtml(h.text)}</b> <span>${ago(sim.now() - h.at)} atrás</span></li>`).join('')}</ul>`;
 }
 
 function escapeHtml(s: string): string {
@@ -124,6 +138,8 @@ function renderStatus(): void {
   followBtn.textContent = `Seguir: ${scene?.isFollowing() ? 'ligado' : 'desligado'}`;
   followBtn.classList.toggle('on', scene?.isFollowing() ?? false);
   const st = source.status();
+  const CONEXAO_PT = { idle: 'ocioso', connecting: 'conectando', connected: 'conectado', reconnecting: 'reconectando', disconnected: 'desconectado' };
+  const stPt = CONEXAO_PT[st] ?? st;
   const active = sim.active();
   const resting = [...sim.residents.values()].filter((r) => r.state === 'resting' && !r.memory).length;
   const remembered = sim.remembered().length;
@@ -132,13 +148,15 @@ function renderStatus(): void {
   const waiting = active.filter((r) => r.state === 'waiting').length;
   const working = active.length - waiting;
   const mains = active.filter((r) => !r.isChild).length;
+  const total = sim.residents.size;
   let text: string;
+  text = `${total} agentes na cidade`;
   if (mode === 'demo') {
-    text = `demo roteirizada · ${mains} sessões simuladas · ${active.length - mains} auxiliares simulados · ${runners} chamadas de ferramenta fora · ${waiting} esperando você` + (resting ? ` · ${resting} descansando` : '');
+    text += ` · demo roteirizada · ${mains} sessões simuladas · ${active.length - mains} auxiliares simulados · ${runners} chamadas de ferramenta fora · ${waiting} esperando você` + (resting ? ` · ${resting} descansando` : '');
   } else {
-    text = `eventos Hermes ao vivo · ${st}`;
+    text += ` · eventos Hermes ao vivo · ${stPt}`;
     if (st === 'connected') {
-      text += ` · ${mains} sessões · ${active.length - mains} auxiliares · ${working} trabalhando · ${runners} chamadas de ferramenta fora · ${waiting} esperando você` + (keepers ? ` · ${keepers} guardiões de plantão` : '') + (resting ? ` · ${resting} descansando` : '') + (remembered ? ` · ${remembered} de mais cedo hoje` : '');
+      text += ` · ${mains} sessões · ${active.length - mains} auxiliares · ${working} trabalhando · ${runners} chamadas de ferramenta fora · ${waiting} esperando você` + (keepers ? ` · ${keepers} guardiões de plantão` : '') + (resting ? ` · ${resting} descansando` : '') + (remembered ? ` · ${remembered} moradores fixos nas casas` : '');
       const o = source.omitted?.();
       if (o && o.stale + o.departed > 0) text += ` · ${o.stale + o.departed} sessões passadas não exibidas`;
     }
