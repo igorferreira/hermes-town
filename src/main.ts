@@ -68,7 +68,7 @@ $('#overview').addEventListener('click', () => { scene?.overview(); renderStatus
 directorBtn.addEventListener('click', () => {
   if (!scene) return;
   scene.setDirector(!scene.isDirector());
-  directorBtn.textContent = `Director: ${scene.isDirector() ? 'on' : 'off'}`;
+  directorBtn.textContent = `Diretor: ${scene.isDirector() ? 'ligado' : 'desligado'}`;
   directorBtn.classList.toggle('on', scene.isDirector());
 });
 followBtn.addEventListener('click', () => {
@@ -79,7 +79,7 @@ followBtn.addEventListener('click', () => {
     if (first) scene.select(first.id);
   }
   scene.setFollow(on);
-  followBtn.textContent = `Follow: ${scene.isFollowing() ? 'on' : 'off'}`;
+  followBtn.textContent = `Seguir: ${scene.isFollowing() ? 'ligado' : 'desligado'}`;
   followBtn.classList.toggle('on', scene.isFollowing());
 });
 
@@ -93,19 +93,19 @@ function renderPanel(): void {
   const r = selectedId ? sim.residents.get(selectedId) : null;
   if (!r) { panel.hidden = true; return; }
   panel.hidden = false;
-  const place = r.place ? PLACE_LABEL[r.place] : r.state === 'leaving' ? 'going home' : r.state === 'waiting' ? 'at the front door' : r.state === 'posted' ? 'at its post' : r.state === 'returning' ? 'coming back' : 'on the road';
+  const place = r.place ? PLACE_LABEL[r.place] : r.state === 'leaving' ? 'indo para casa' : r.state === 'waiting' ? 'na porta de casa' : r.state === 'posted' ? 'no posto' : r.state === 'returning' ? 'voltando' : 'a caminho';
   const parent = r.parentId ? sim.residents.get(r.parentId) : null;
   const runnersOut = r.kind === 'session' ? sim.runners().filter((x) => x.parentId === r.id).length : 0;
   const rows: [string, string][] = [
-    ['state', r.state === 'waiting' ? 'waiting for you' : r.state === 'posted' ? 'on watch until the next run' : r.state],
-    ['where', place],
-    ['doing', r.bubble ?? (r.anim === 'sit' ? 'resting' : r.anim)],
-    ...(r.kind === 'runner' ? [['sent by', parent?.name ?? 'a session'] as [string, string]] : [['runners out', String(runnersOut)] as [string, string]]),
-    ['home', r.home.label],
-    ['in town', ago(sim.now() - r.spawnedAt)],
-    ['last event', `${ago(sim.now() - r.lastEventAt)} ago`],
+    ['estado', r.state === 'waiting' ? 'esperando você' : r.state === 'posted' ? 'de guarda até a próxima execução' : r.state],
+    ['onde', place],
+    ['fazendo', r.bubble ?? (r.anim === 'sit' ? 'descansando' : r.anim)],
+    ...(r.kind === 'runner' ? [['enviado por', parent?.name ?? 'uma sessão'] as [string, string]] : [['chamadas fora', String(runnersOut)] as [string, string]]),
+    ['casa', r.home.label],
+    ['na cidade', ago(sim.now() - r.spawnedAt)],
+    ['último evento', `${ago(sim.now() - r.lastEventAt)} atrás`],
   ];
-  const sub = r.kind === 'runner' ? `tool call · ${r.role}` : r.role === 'scheduled' ? `scheduled job · keeper` : `${r.title ?? (r.memory ? 'earlier today' : r.isChild ? 'subagent' : 'session')} · ${r.role}`;
+  const sub = r.kind === 'runner' ? `chamada de ferramenta · ${r.role}` : r.role === 'scheduled' ? `tarefa agendada · guardião` : `${r.title ?? (r.memory ? 'mais cedo hoje' : r.isChild ? 'subagente' : 'sessão')} · ${r.role}`;
   panel.innerHTML = `
     <h3>${escapeHtml(r.name)}</h3>
     <div class="sub">${escapeHtml(sub)}</div>
@@ -118,7 +118,7 @@ function escapeHtml(s: string): string {
 }
 
 function renderStatus(): void {
-  followBtn.textContent = `Follow: ${scene?.isFollowing() ? 'on' : 'off'}`;
+  followBtn.textContent = `Seguir: ${scene?.isFollowing() ? 'ligado' : 'desligado'}`;
   followBtn.classList.toggle('on', scene?.isFollowing() ?? false);
   const st = source.status();
   const active = sim.active();
@@ -131,15 +131,15 @@ function renderStatus(): void {
   const mains = active.filter((r) => !r.isChild).length;
   let text: string;
   if (mode === 'demo') {
-    text = `scripted demo · ${mains} simulated sessions · ${active.length - mains} simulated helpers · ${runners} tool calls out · ${waiting} waiting for you` + (resting ? ` · ${resting} resting` : '');
+    text = `demo roteirizada · ${mains} sessões simuladas · ${active.length - mains} auxiliares simulados · ${runners} chamadas de ferramenta fora · ${waiting} esperando você` + (resting ? ` · ${resting} descansando` : '');
   } else {
-    text = `live Hermes events · ${st}`;
+    text = `eventos Hermes ao vivo · ${st}`;
     if (st === 'connected') {
-      text += ` · ${mains} sessions · ${active.length - mains} helpers · ${working} working · ${runners} tool calls out · ${waiting} waiting for you` + (keepers ? ` · ${keepers} keepers on watch` : '') + (resting ? ` · ${resting} resting` : '') + (remembered ? ` · ${remembered} from earlier today` : '');
+      text += ` · ${mains} sessões · ${active.length - mains} auxiliares · ${working} trabalhando · ${runners} chamadas de ferramenta fora · ${waiting} esperando você` + (keepers ? ` · ${keepers} guardiões de plantão` : '') + (resting ? ` · ${resting} descansando` : '') + (remembered ? ` · ${remembered} de mais cedo hoje` : '');
       const o = source.omitted?.();
-      if (o && o.stale + o.departed > 0) text += ` · ${o.stale + o.departed} past sessions not shown`;
+      if (o && o.stale + o.departed > 0) text += ` · ${o.stale + o.departed} sessões passadas não exibidas`;
     }
-    if (st === 'disconnected') text += ' · start the live server or open ?agents=demo';
+    if (st === 'disconnected') text += ' · inicie o servidor ao vivo ou abra ?agents=demo';
   }
   statusEl.textContent = text;
   statusEl.className = `status ${mode === 'demo' ? 'demo' : st === 'connected' ? 'ok' : st === 'disconnected' ? 'bad' : ''}`;

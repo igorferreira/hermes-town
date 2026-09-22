@@ -140,7 +140,7 @@ export function createLiveSource(sink: EventSink): Source {
   };
 
   return {
-    label: 'live Hermes events',
+    label: 'eventos Hermes ao vivo',
     start() { stopped = false; void boot(); },
     stop() { stopped = true; clearTimers(); stream?.close(); stream = null; status = 'idle'; },
     status: () => status,

@@ -226,8 +226,9 @@ export function buildTownLocal(): TownMap {
   buildings[1]!.door = { x: 10, y: 11 };
   buildings[2]!.door = { x: 51, y: 11 };
   const homes: Building[] = [];
+  const homeNames = ['Casa Banca de Saúde', 'Casa DevSquad', 'Casa Relacionamento', 'Casa Carro', 'Casa Celular', 'Casa Moda', 'Casa Perfumaria'];
   [3, 10, 17, 24, 36, 43, 50].forEach((hx, i) => {
-    const h = mk(`home-${i}`, 'house', hx, 35, 5, 4, `House ${i + 1}`);
+    const h = mk(`home-${i}`, 'house', hx, 35, 5, 4, homeNames[i] ?? `Casa ${i + 1}`);
     h.porch = [{ x: hx, y: 39 }, { x: hx + 4, y: 39 }];
     homes.push(h);
   });
@@ -346,6 +347,8 @@ export function buildTownLocal(): TownMap {
   homes.forEach((h, i) => {
     props.push({ kind: 'porchBench', x: h.x * TILE, y: 39 * TILE + 6 });
     props.push({ kind: 'porchBench', x: (h.x + 4) * TILE, y: 39 * TILE + 6 });
+    // a banner over each house's porch, nudged sideways per index so they never overlap
+    props.push({ kind: 'banner', x: (h.x + 2) * TILE + i * 3, y: 38 * TILE - 10, blocks: [] });
     // every house is somebody's: sunflowers, a flower box, something left by the wall
     props.push({ kind: 'sunflowers', x: (h.x + (i % 2 ? 3 : 1)) * TILE + 2, y: 38 * TILE - 6, blocks: [] });
     if (i % 3 !== 1) props.push({ kind: 'flowerBox', x: (h.x + (i % 2 ? 0 : 3)) * TILE + 1, y: 38 * TILE + 8, blocks: [] });

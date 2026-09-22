@@ -86,12 +86,12 @@ export const THINK_TARGET: ToolTarget = { place: 'hall', style: 'desk', verb: 't
 export const IDLE_TARGET: ToolTarget = { place: 'tavern', style: 'sit', verb: 'idle' };
 
 export const PLACE_LABEL: Record<Place, string> = {
-  library: 'Library',
-  workshop: 'Workshop',
-  forge: 'Forge',
-  post: 'Post office',
-  observatory: 'Observatory',
-  hall: 'Town hall',
-  tavern: 'Tavern',
-  market: 'Market',
+  library: 'Biblioteca',
+  workshop: 'Oficina',
+  forge: 'Forja',
+  post: 'Correio',
+  observatory: 'Observatório',
+  hall: 'Prefeitura',
+  tavern: 'Taverna',
+  market: 'Feira',
 };
