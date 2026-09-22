@@ -3,6 +3,7 @@ import { TILE, T } from './art/tiles';
 import { createDemoSource } from './live/demoSource';
 import { createLiveSource } from './live/liveSource';
 import type { Source } from './live/events';
+import { STATIC_RESIDENTS } from './live/residents';
 import { TownScene } from './scenes/TownScene';
 import { TownSim } from './sim/town';
 import { PLACE_LABEL, type Place } from './sim/toolMap';
@@ -19,6 +20,8 @@ const hour = hourParam !== null && Number.isFinite(Number(hourParam)) ? Number(h
 
 const map = buildTownMap();
 const sim = new TownSim(map);
+// fixed townsfolk from the offline roster: permanent residents at their homes
+sim.materializeResidents(STATIC_RESIDENTS);
 const source: Source = mode === 'demo' ? createDemoSource(sim) : createLiveSource(sim);
 
 const $ = <T extends HTMLElement>(sel: string): T => document.querySelector<T>(sel)!;

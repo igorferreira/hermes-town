@@ -117,6 +117,9 @@ export interface SimEvent { at: number; text: string; residentId: string }
 
 export interface RememberedSession { agentId: string; displayName?: string; role?: RoleClass; at: number }
 
+/** One entry of the offline roster (src/live/residents.json). */
+export interface StaticResident { id: string; name: string; home: string; homeIndex: number }
+
 export class TownSim {
   readonly residents = new Map<string, Resident>();
   readonly departed: Resident[] = [];
@@ -136,6 +139,10 @@ export class TownSim {
   private stallUse = new Map<string, number>();
   /** Building activity, 0..1, drives lit windows and chimney smoke. */
   readonly activity = new Map<Place, number>();
+  /** The boot roster, kept so reset() can re-materialize the fixed residents. */
+  private staticResidents: StaticResident[] = [];
+  /** Tiles claimed by fixed residents that did not fit on a porch. */
+  private staticSpots = new Set<string>();
 
   constructor(readonly map: TownMap) {
     for (const b of map.buildings) this.activity.set(b.kind as Place, 0);
@@ -187,6 +194,64 @@ export class TownSim {
     this.board.length = 0;
     this.occupied.clear();
     this.porches.clear();
+    this.staticSpots.clear();
+    // the fixed townsfolk are permanent: they come back with every reset
+    this.materializeResidents(this.staticResidents);
+  }
+
+  /**
+   * The offline roster materialized as permanent residents: each one sits at
+   * its assigned house (porch first, then the yard around the door). They are
+   * remembered residents, so live events can still wake them into town.
+   */
+  materializeResidents(list: StaticResident[]): void {
+    this.staticResidents = list;
+    for (const m of list) {
+      if (this.residents.has(m.id)) continue;
+      const home = this.map.homes.find((h) => h.id === m.home) ?? this.map.homes[m.homeIndex % this.map.homes.length] ?? this.map.homes[0];
+      if (!home) continue;
+      const spot = this.staticSpotFor(home);
+      if (!spot) continue;
+      const r = this.makeResident(m.id, m.name, 'general', 'session', null);
+      r.memory = true;
+      r.home = home;
+      const key = `${spot.x},${spot.y}`;
+      if (home.porch.some((p) => p.x === spot.x && p.y === spot.y)) this.porches.add(key);
+      else this.staticSpots.add(key);
+      r.porch = spot;
+      const c = tileCenter(spot);
+      r.x = c.x; r.y = c.y;
+      r.state = 'resting';
+      r.anim = 'sit';
+      r.facing = 'down';
+      r.hold = Infinity; // a fixed resident never leaves on its own
+      r.history = [{ at: this.time, text: 'morador fixo da casa' }];
+      this.residents.set(r.id, r);
+    }
+  }
+
+  /** A porch seat if one is free, otherwise a walkable tile beside the house. */
+  private staticSpotFor(home: Building): Point | null {
+    for (const p of home.porch) {
+      const key = `${p.x},${p.y}`;
+      if (!this.porches.has(key) && !this.staticSpots.has(key)) return p;
+    }
+    const door = home.door;
+    const candidates: { t: Point; d: number }[] = [];
+    for (let y = door.y + 1; y <= door.y + 4; y++) {
+      for (let x = home.x - 2; x <= home.x + home.w + 2; x++) {
+        if (x < 0 || y < 0 || x >= this.map.grid.w || y >= this.map.grid.h) continue;
+        if (this.map.grid.cost[y * this.map.grid.w + x] === 0) continue;
+        if (this.map.stations.some((s) => s.tile.x === x && s.tile.y === y)) continue;
+        candidates.push({ t: { x, y }, d: Math.abs(x - door.x) + Math.abs(y - door.y) });
+      }
+    }
+    candidates.sort((a, b) => a.d - b.d);
+    for (const c of candidates) {
+      const key = `${c.t.x},${c.t.y}`;
+      if (!this.staticSpots.has(key) && !this.porches.has(key)) return c.t;
+    }
+    return null;
   }
 
   /** Sessions and subagents that still represent a live execution context. */
